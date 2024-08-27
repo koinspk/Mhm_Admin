@@ -1,0 +1,265 @@
+<div class="container mt-5">
+    <h6 class="mb-4">Vehicle Details Form</h6>
+    <form [formGroup]="VehicleForm" (ngSubmit)="onSubmit()">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="plateNo" class="form-label">Plate No</label>
+          <input type="text" class="form-control" formControlName="plateno" id="plateNo" placeholder="Enter Plate No">
+          @if (f['plateno'].touched && f['plateno'].hasError('required')) {
+                <div class="text-danger">Plate No is required</div>
+          } @else if(f['plateno'].hasError('minlength')) {
+            <div class="text-danger">Atleast enter character {{ f['plateno'].getError('minlength')?.requiredLength }}</div>
+          }
+        </div>
+        <div class="col-md-4">
+          <label for="make" class="form-label">Make</label>
+          <input type="text" class="form-control" formControlName="make" id="make" placeholder="Enter Make">
+                @if (f['make'].touched && f['make'].hasError('required')) {
+                    <div class="text-danger">Make is required</div>
+            } @else if(f['make'].hasError('minlength')) {
+                <div class="text-danger">Atleast enter character {{ f['make'].getError('minlength')?.requiredLength }}</div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <label for="model" class="form-label">Model</label>
+            <input type="text" class="form-control" formControlName="model" id="model" placeholder="Enter Model">
+                    @if (f['model'].touched && f['model'].hasError('required')) {
+                        <div class="text-danger">Model is required</div>
+                } @else if(f['model'].hasError('minlength')) {
+                    <div class="text-danger">Atleast enter character {{ f['model'].getError('minlength')?.requiredLength }}</div>
+                }
+        </div>
+      </div>
+      <div class="row mb-3">
+      
+        <div class="col-md-4">
+          <label for="year" class="form-label">Year of Manufacturing</label>
+            <select class="form-select" formControlName="year" id="year">
+                <option value="">Select Year of Manufacturing</option>
+                @for (year of years; track year) {
+                    <option value="{{year}}">{{ year }}</option>
+                    } @empty {
+                    <option>There are no items.</option>
+                    }
+            </select>
+                @if (f['year'].touched && f['year'].hasError('required')) {
+                    <div class="text-danger">Year of Manufacturing is required</div>
+            } @else if(f['year'].hasError('minlength')) {
+                <div class="text-danger">Atleast enter character {{ f['year'].getError('minlength')?.requiredLength }}</div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <label for="fuelType" class="form-label">Fuel Type</label>
+            <select class="form-select" id="fuelType" formControlName="fueltype">
+              <option selected>Choose Fuel Type</option>
+              <option value="petrol">Petrol</option>
+              <option value="diesel">Diesel</option>
+              <option value="electric">Electric</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+            @if (f['fueltype'].touched && f['fueltype'].hasError('required')) {
+                <div class="text-danger">Fuel Type is required</div>
+        } @else if(f['fueltype'].hasError('minlength')) {
+            <div class="text-danger">Atleast enter character {{ f['fueltype'].getError('minlength')?.requiredLength }}</div>
+        }
+          </div>
+
+          <div class="col-md-4">
+            <label for="color" class="form-label">Color</label>
+            <input type="text" class="form-control" formControlName="color" id="color" placeholder="Enter Color">
+                @if (f['color'].touched && f['color'].hasError('required')) {
+                    <div class="text-danger">Color is required</div>
+            } @else if(f['color'].hasError('minlength')) {
+                <div class="text-danger">Atleast enter character {{ f['color'].getError('minlength')?.requiredLength }}</div>
+            }  
+        </div>
+
+      </div>
+   
+
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="chassisNo" class="form-label">Chassis No</label>
+          <input type="text" class="form-control" formControlName="chassisNo" id="chassisNo" placeholder="Enter Chassis No">
+                    @if (f['chassisNo'].touched && f['chassisNo'].hasError('required')) {
+                        <div class="text-danger">Chassis no is required</div>
+                } @else if(f['chassisNo'].hasError('minlength')) {
+                    <div class="text-danger">Atleast enter character {{ f['chassisNo'].getError('minlength')?.requiredLength }}</div>
+                }  
+        </div>
+        <div class="col-md-4">
+          <label for="engineNo" class="form-label">Engine No</label>
+          <input type="text" class="form-control" formControlName="engineNo" id="engineNo" placeholder="Enter Engine No">
+                @if (f['engineNo'].touched && f['engineNo'].hasError('required')) {
+                    <div class="text-danger">Engine no is required</div>
+            } @else if(f['engineNo'].hasError('minlength')) {
+                <div class="text-danger">Atleast enter character {{ f['engineNo'].getError('minlength')?.requiredLength }}</div>
+            }  
+        </div>
+      </div>
+
+      <h6 class="mb-4">Insurance Details Form</h6>
+
+      
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="chassisNo" class="form-label">Insurance Expiry Date</label>
+          <div class="input-group">
+			<input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+                format="dd-mm-yyy"
+				name="dp"
+				formControlName="insuranceexpirydate"
+                (ngModelChange)="onInputChange($ev)"
+				ngbDatepicker
+				#insuranceexpirydate="ngbDatepicker"
+			/>
+			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="insuranceexpirydate.toggle()" type="button"></button>
+      
+        </div>
+        @if (f['insuranceexpirydate'].touched && f['insuranceexpirydate'].hasError('required')) {
+            <div class="text-danger">Insurance Expiry Date is required</div>
+    } @else if(f['insuranceexpirydate'].hasError('minlength')) {
+        <div class="text-danger">Atleast enter character {{ f['insuranceexpirydate'].getError('minlength')?.requiredLength }}</div>
+    } 
+     
+        </div>
+        <div class="col-md-4">
+          <label for="engineNo" class="form-label">FC Expiry Date</label>
+        
+          <div class="input-group">
+			<input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+				name="fcexpirydate"
+				formControlName="fcexpirydate"
+				ngbDatepicker
+                #fcexpirydate="ngbDatepicker"
+			/>
+			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="fcexpirydate.toggle()" type="button"></button>
+      
+        </div>
+                @if (f['fcexpirydate'].touched && f['fcexpirydate'].hasError('required')) {
+                    <div class="text-danger">FC Expiry is required</div>
+                } @else if(f['fcexpirydate'].hasError('minlength')) {
+                    <div class="text-danger">Atleast enter character {{ f['fcexpirydate'].getError('minlength')?.requiredLength }}</div>
+                }  
+        </div>
+      </div>
+
+      <h6 class="mb-4">Image Upload</h6>
+    <div class="mb-3">
+        <label for="fileInput" class="form-label">Choose File</label>
+        <input class="form-control" (change)="onFilesSelected($event)"  type="file" id="fileInput"  name="files[]" multiple>
+    </div>
+
+    <div class="d-flex preview-container">
+        @for (file of files; track file) {
+            @if(file.type.startsWith('image/')){
+                <div class="position-relative">
+                <img class="rounded m-2" [src]="file.url" alt="Preview" width="70" height="70"/>
+                <i class="bi-x-circle-fill text-danger position-absolute top-0 start-100" (click)="removeFile(file)"></i>
+                </div>
+            }
+        }
+       
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <h6 class="mb-4">Documents Upload</h6>
+        <svg (click)="addDocuments()" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="green" class="bi bi-plus" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+          </svg>
+      </div>
+     
+      <div formArrayName="documents">
+            <div class="row">
+                <div class="col-sm-12">
+                  @for (document of getDocuments.controls; track document ; let index = $index){
+              
+                        <div [formGroupName]="index" class="d-flex">
+                            <div class="col-md-2 me-1">
+                                <label for="type" class="form-label">Type</label>
+                                <select class="form-select" formControlName="type" >
+                                    <option value="">Select Type</option>
+                                    @for (proof of proofs; track proof.name) {
+                                        <option value="{{proof.index}}">{{ proof.name }}</option>
+                                        } @empty {
+                                        <option>There are no items.</option>
+                                        }
+                                </select>
+                              
+                                @if(document?.get('type')?.touched && document?.get('type')?.hasError('required') ){
+                                    <div class="text-danger">Type is required</div>
+                                }
+                            </div>
+
+                            <div class="col-md-2 me-1">
+                                <label for="startdate" class="form-label">Start Date</label>
+                                <div class="input-group">
+                                    <input
+                                        class="form-control"
+                                        placeholder="yyyy-mm-dd"
+                                        name="startDate"
+                                        formControlName="startDate"
+                                        ngbDatepicker
+                                        #startDate="ngbDatepicker"
+                                    />
+                                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="startDate.toggle()" type="button"></button>
+                                </div>
+                               
+                                @if(document?.get('startDate')?.touched && document?.get('startDate')?.hasError('required')){
+                                    <div class="text-danger">Start Date is required</div>
+                                }
+                            </div>
+
+                            <div class="col-md-2 me-1">
+                                <label for="enddate" class="form-label">End Date</label>
+                                <div class="input-group">
+                                    <input
+                                        class="form-control"
+                                        placeholder="yyyy-mm-dd"
+                                        name="dp"
+                                        formControlName="endDate"
+                                        ngbDatepicker
+                                        #endDate="ngbDatepicker"
+                                    />
+                                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="endDate.toggle()" type="button"></button>
+                                </div>
+                               
+                                @if(document?.get('endDate')?.touched && document?.get('endDate')?.hasError('required')){
+                                    <div class="text-danger">End Date is required</div>
+                                }
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="fileInput" class="form-label">Choose File</label>
+                                 <input  (change)="onFileSelectDocuments($event,index)"  type="file" id="fileInput"   >
+                            </div>
+                       
+
+                            <div class="col-md-2">
+                                @if(document?.get('imagesrc')?.value){
+                                    <img class="rounded m-2" [src]="document?.get('imagesrc')?.value" alt="Preview" width="70" height="70"/>
+                                }
+                                
+                            </div>
+
+                        </div>
+                  }
+                </div>
+            </div>
+      </div>
+
+
+
+      <button type="submit" class="btn btn-primary" [disabled]="VehicleForm.invalid">Submit</button>
+    </form>
+  </div>
+
+
+

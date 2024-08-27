@@ -1,0 +1,25 @@
+th[draggable="true"] {
+    cursor: move;
+  }
+  
+  th.dragging {
+    opacity: 0.5;
+  }
+
+  /* Initial state of the draggable header */
+th {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* State when dragging starts */
+.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+
+}
+
+/* State when an item is dropped */
+.dropped {
+  transform: scale(1); /* Ensure it returns to original scale */
+  transition: background-color 0.8s ease;
+}

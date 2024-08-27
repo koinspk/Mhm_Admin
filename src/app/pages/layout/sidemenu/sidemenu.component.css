@@ -1,0 +1,38 @@
+
+
+/* Navigation List */
+.nav {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Full width of the sidebar */
+}
+
+
+.nav-item {
+    margin: 0;
+  }
+  
+  .nav-link {
+    display: block;
+    padding: 15px 20px;
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, padding-left 0.3s, border-left 0.3s;
+    border-left: 5px solid transparent; /* Border for hover effect */
+  }
+  
+  .nav-link:hover {
+    color: aliceblue;
+    background-color: #1b5e20; /* Slightly darker green for hover */
+    padding-left: 30px; /* Indentation effect */
+    border-left: 5px solid #cddc39; /* Highlight border color */
+  }
+  
+  .nav-link.active {
+    color: aliceblue;
+    background-color: #1b5e20; /* Slightly darker green for hover */
+    padding-left: 30px; /* Indentation effect */
+    border-left: 5px solid #cddc39; 
+  }

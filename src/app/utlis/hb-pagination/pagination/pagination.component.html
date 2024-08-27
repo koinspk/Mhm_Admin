@@ -1,0 +1,31 @@
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+            @for(column of data.columns;track column.column+"."+"columns";let i=$index){
+                <th scope="col"
+                draggable="true"
+                (dragstart)="onDragStart($event, i)"
+                (dragover)="onDragOver($event, i)"
+                (drop)="onDrop($event, i)"
+                >{{ column.description }}</th>
+            }
+            </tr>
+        </thead>
+        <tbody>
+    
+            @for(item of data.items;track item){
+                <tr>
+                    @for(column of data.columns;track column.name+"."+"items"){
+                        <td >{{ item[column.column] }}</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <app-pagening  
+    [totalItems]="data.total" 
+    [itemsPerPage]="data.itemPerPage" 
+    [currentPage]="data.currentPage"
+    (pageChange)="onPageChange($event)"/>
+</div>

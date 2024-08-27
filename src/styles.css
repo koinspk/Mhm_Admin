@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+:root {
+  --primary-color: #28a745;
+  --secondary-color: #007bff;
+  --text-color: #333;
+  --background-color: #f8f9fa;
+  --border-radius: 4px;
+}
+
+
+
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  background-color: #f8f9fa;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+.sidebar.collapsed {
+  transform: translateX(0);
+}
+.main-content {
+  margin-left: 200px;
+  transition: margin-left 0.3s ease;
+}
+.main-content.shifted {
+  margin-left: 0;
+}
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+  }
+  .sidebar {
+    width: 100%;
+    transform: translateX(-100%);
+  }
+  .sidebar.collapsed {
+    transform: translateX(0);
+  }
+}
+
+.bi-list {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.bi-list.open {
+  /* Example of a rotate animation */
+  /* transform: rotate(90deg); */
+}
+
+/* Optional: Change color or other styles on toggle */
+.bi-list.close {
+  opacity: 1; /* Example for fade-in effect */
+}
+
+.bi-list.open {
+  opacity: 0.5; /* Example for fade-out effect */
+}
+
+/* Additional animation example */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
