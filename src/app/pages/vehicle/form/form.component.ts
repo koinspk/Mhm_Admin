@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, Form, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbAlertModule, NgbDate, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { HttpserviceService } from '../../../services/httpservice.service';
+import { HbDatepickerComponent } from '../../../utlis/hb-datepicker/hb-datepicker.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [ReactiveFormsModule,NgbDatepickerModule, NgbAlertModule],
+  imports: [ReactiveFormsModule,NgbDatepickerModule, NgbAlertModule , HbDatepickerComponent],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -16,8 +18,10 @@ import { HttpserviceService } from '../../../services/httpservice.service';
 export class FormComponent implements OnInit {
   
 VehicleForm !: FormGroup;
+multiplefileuploadreference : any;
+
 years :any = [];
-files: { name: string, url: string, type: string }[] = [];
+files: { name: string, url: string, type: string , file : BinaryData}[] = [];
 
 proofs:any = [
   { index : 1 , name : "RC" },
@@ -29,8 +33,13 @@ proofs:any = [
   { index : 7 , name : "Permit Type 3" },
 ];
 minDate!: NgbDate;
+  id: any  ;
 
-  constructor(private fb: FormBuilder , private httpService : HttpserviceService){
+  constructor(
+    private fb: FormBuilder , 
+    private httpService : HttpserviceService,
+    private route: ActivatedRoute,
+  ){
     const today = new Date();
     this.minDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
  
@@ -49,17 +58,49 @@ minDate!: NgbDate;
       engineNo : [''],
       fcexpirydate : [''],
       insuranceexpirydate : [''],
-      documents : this.fb.array([this.fnDocuments()])
+      documents : this.fb.array([])
     });
 
     this.generateYears();
+ 
+    /**
+     * Check page is EDIT and Patch data
+     * **/
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      if (this.id) {
+       
+        this.getVehicleRecoedById()
+      }
+    });
    
+  }
+
+
+  getVehicleRecoedById(){
+   
+    this.httpService.getData(`vehicle/${this.id}`).subscribe((res:any)=>{
+      delete res._id;
+      delete res.images;
+      delete res.documents;
+      delete res.isDeleted;
+      delete res.createdAt;
+      delete res.updatedAt;
+      delete res.__v;
+      res['documents'] = [];
+      console.log(res)
+      this.VehicleForm.setValue(res);
+      
+    },error=>{
+      console.log(error)
+    })
   }
 
   fnDocuments(){
     return this.fb.group({
       type : ['',Validators.required],
       imagesrc: [''],
+      preview: [''],
       startDate: ['', Validators.required],
       endDate: ['', [Validators.required]]
     });
@@ -78,27 +119,32 @@ minDate!: NgbDate;
   }
 
   async onSubmit(){
-  
-    // try {
-    //     let record = this.httpService.convertToFormData(this.VehicleForm.value);
-    //     console.log(record);
-        
-    //   this.httpService.postData('vehicle',record).subscribe(res=>{
-    //     console.log(res)
-    //   },err=>{
-    //     console.log(err)
-    //   })
+
+    
+    this.multiplefileuploadreference = JSON.parse(JSON.stringify(this.VehicleForm.get('documents')?.value));;
+    
+    try {
+        this.VehicleForm.value['documents']?.map((r:any)=> delete r['preview'] );
+        this.VehicleForm.value['files'] = this.files?.map((res:any)=>res.file); 
+
+        let record = this.httpService.convertToFormData(this.VehicleForm.value);
+
+      this.httpService.postData('vehicle',record).subscribe(res=>{
+        console.log(res)
+      },err=>{
+        console.log(err)
+      })
      
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    } catch (error) {
+      console.log(error);
+     }
 
 
 
   }
 
   get getDocuments() : FormArray {
-    return this.VehicleForm.get("documents") as FormArray
+    return this.VehicleForm.get("documents") as FormArray || []
   }
 
 
@@ -112,11 +158,6 @@ minDate!: NgbDate;
    
   }
 
-  onInputChange(ev:any,field:string){
-    console.log(ev)
-    //this.VehicleForm.get(field)?.patchValue(this.httpService.parse(ev))
-  }
-
 
   /**
    * FILE UPLOAD SNIPPETS Start -------------------------------------------------------------
@@ -124,8 +165,10 @@ minDate!: NgbDate;
 
   onFilesSelected(event: any) {
     const selectedFiles = event.target.files;
+
     if (selectedFiles) {
       for (let i = 0; i < selectedFiles.length; i++) {
+
         const file = selectedFiles[i];
         const reader = new FileReader();
 
@@ -133,34 +176,24 @@ minDate!: NgbDate;
           this.files.push({
             name: file.name,
             url: e.target.result,
-            type: file.type
+            type: file.type,
+            file : file
           });
         };
-
         reader.readAsDataURL(file);
       }
     }
   }
 
   onFileSelectDocuments(event:any , index:number){
-    const selectedFiles = event.target.files;
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const file = selectedFiles[i];
-        const reader = new FileReader();
+    let selectedFiles = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      (this.getDocuments.at(index) as FormGroup).get('imagesrc')?.setValue(selectedFiles);
+      (this.getDocuments.at(index) as FormGroup).get('preview')?.setValue(e.target.result);
+    };
+    reader.readAsDataURL(selectedFiles);
 
-        reader.onload = (e: any) => {
-          (this.getDocuments.at(index) as FormGroup).get('imagesrc')?.setValue({
-            name: file.name,
-            url: e.target.result,
-            type: file.type
-          })
-          
-        };
-
-        reader.readAsDataURL(file);
-      }
-    }
   }
 
   removeFile(file: { name: string }) {
@@ -171,5 +204,5 @@ minDate!: NgbDate;
    * FILE UPLOAD SNIPPETS END ----------------------------------------------
    * **/
 
-
+  
 }

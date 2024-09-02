@@ -1,14 +1,21 @@
-<div>
-    <table class="table">
+<div class="table-wrapper">
+    <table class="table styled-table" >
         <thead>
             <tr>
             @for(column of data.columns;track column.column+"."+"columns";let i=$index){
-                <th scope="col"
-                draggable="true"
-                (dragstart)="onDragStart($event, i)"
-                (dragover)="onDragOver($event, i)"
-                (drop)="onDrop($event, i)"
-                >{{ column.description }}</th>
+                @if(column.action ){
+                    <th scope="col"
+                    >{{ column.description }}</th>
+                } @else if(!hasKey(column)) {
+                    
+                    <th scope="col"
+                    draggable="true"
+                    (dragstart)="onDragStart($event, i)"
+                    (dragover)="onDragOver($event, i)"
+                    (drop)="onDrop($event, i)"
+                    >{{ column.description }}</th>
+                 
+                }
             }
             </tr>
         </thead>
@@ -17,15 +24,54 @@
             @for(item of data.items;track item){
                 <tr>
                     @for(column of data.columns;track column.name+"."+"items"){
-                        <td >{{ item[column.column] }}</td>
+                        @if(!hasKey(column)){
+                            @if(column.img){
+                                @if(item[column.column]){
+                                    <td><img class="hb-image" [src]="item[column.column]" [style]="{'width': column.width ?? '100px', 'height': column.height ?? '100px'}"></td>
+
+                                } @else {
+                                    <td><img class="hb-image" src="/public/assets/noimage.png" [style]="{'width': column.width ?? '100px', 'height': column.height ?? '100px'}"></td>
+
+                                    
+                                }
+                            } @else {
+                                <td > 
+                                    @if(column.date){
+                                        {{ item[column.column] | dateformat  }}
+                                    } @else {
+                                        {{ item[column.column]  }}
+                                    }
+                                   
+                                </td>
+                            }
+                            
+                        } @else if(column.action) {
+                            <td >
+                                <div>
+                                @for(action of column.actions;track action.action+"."+"actions"){
+                                    @if(action.action == 'edit'){
+                                        <i (click)="onViewDetails(action.action , item[column.value]  )" [class]="action.icon ? action.icon : 'bi bi-pencil'" [style]="{'color': action.color, 'font-size': action.size , 'margin-right' : '20px'}"></i>
+                                    }
+                                    @if(action.action == 'delete'){
+                                        <i (click)="onViewDetails(action.action , item[column.value]  )" [class]="action.icon ? action.icon : 'bi bi-trash'" [style]="{'color': action.color, 'font-size': action.size, 'margin-right' : '20px'}"></i>
+                                    }
+                                    @if(action.action == 'view'){
+                                        <i (click)="onViewDetails(action.action , item[column.value]  )" [class]="action.icon ? action.icon : 'bi bi-eye'" [style]="{'color': action.color, 'font-size': action.size , 'margin-right' : '20px'}"></i>
+                                    }
+                                }
+                                 </div>
+                            </td>
+                        }
+                     
                     }
                 </tr>
             }
         </tbody>
     </table>
-    <app-pagening  
-    [totalItems]="data.total" 
-    [itemsPerPage]="data.itemPerPage" 
-    [currentPage]="data.currentPage"
-    (pageChange)="onPageChange($event)"/>
+  
 </div>
+<app-pagening  
+[totalItems]="data.total" 
+[itemsPerPage]="data.itemPerPage" 
+[currentPage]="data.currentPage"
+(pageChange)="onPageChange($event)"/>

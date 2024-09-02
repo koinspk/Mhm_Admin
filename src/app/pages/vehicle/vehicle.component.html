@@ -3,6 +3,6 @@
       <button class="btn btn-primary"  [routerLink]="['add']">ADD</button>
   </div>
 
-  <app-pagination [data]="Tabledata"/>
+  <app-pagination [data]="Tabledata"  (onPagination)="onPaginationChange($event)"/>
 
 </div>

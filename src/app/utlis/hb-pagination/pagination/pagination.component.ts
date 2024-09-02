@@ -1,17 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageningComponent } from "../pagening/pagening.component";
+import { ActivatedRoute, Router } from '@angular/router';
+import moment from 'moment';
+import { DateformatPipe } from '../../../pipes/dateformat.pipe';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [PageningComponent],
+  imports: [PageningComponent , DateformatPipe],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css'
 })
 export class PaginationComponent implements OnInit{
   
+  constructor(private router: Router, private route: ActivatedRoute){}
 
   @Input() data: any;
+  @Output() onPagination = new EventEmitter<string>();
 
 
   ngOnInit(): void {
@@ -20,7 +25,7 @@ export class PaginationComponent implements OnInit{
 
 
   onPageChange(object:any): void {
-    console.log(object)
+    this.onPagination.emit(object);
   }
 
   draggedIndex: number | null = null;
@@ -46,6 +51,16 @@ export class PaginationComponent implements OnInit{
     const target = event.target as HTMLElement;
     target.classList.remove('dragging');
     target.classList.add('dropped');
+  }
+
+  onViewDetails(path :String, id : any){
+
+    let url = `${path}/${id}`;
+    this.router.navigate([url], {relativeTo: this.route});
+   }
+
+   hasKey(data:any): boolean {
+    return 'action' in data !;
   }
 
 }

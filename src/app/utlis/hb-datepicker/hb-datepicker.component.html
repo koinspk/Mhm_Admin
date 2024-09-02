@@ -1,0 +1,13 @@
+<div class="input-group">
+  <input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+        format="dd-mm-yyy"
+				name="dp"
+        [formControl]="referenceControl"
+				ngbDatepicker
+				#insuranceexpirydate="ngbDatepicker"
+			/>
+			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="insuranceexpirydate.toggle()" type="button"></button>
+      
+</div>

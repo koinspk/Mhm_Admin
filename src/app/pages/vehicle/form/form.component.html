@@ -107,20 +107,10 @@
       <div class="row mb-3">
         <div class="col-md-4">
           <label for="chassisNo" class="form-label">Insurance Expiry Date</label>
-          <div class="input-group">
-			<input
-				class="form-control"
-				placeholder="yyyy-mm-dd"
-                format="dd-mm-yyy"
-				name="dp"
-				formControlName="insuranceexpirydate"
-                (ngModelChange)="onInputChange($ev)"
-				ngbDatepicker
-				#insuranceexpirydate="ngbDatepicker"
-			/>
-			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="insuranceexpirydate.toggle()" type="button"></button>
-      
-        </div>
+        
+          
+        <app-hb-datepicker [control]="VehicleForm.get('insuranceexpirydate')" />
+           
         @if (f['insuranceexpirydate'].touched && f['insuranceexpirydate'].hasError('required')) {
             <div class="text-danger">Insurance Expiry Date is required</div>
     } @else if(f['insuranceexpirydate'].hasError('minlength')) {
@@ -130,19 +120,8 @@
         </div>
         <div class="col-md-4">
           <label for="engineNo" class="form-label">FC Expiry Date</label>
-        
-          <div class="input-group">
-			<input
-				class="form-control"
-				placeholder="yyyy-mm-dd"
-				name="fcexpirydate"
-				formControlName="fcexpirydate"
-				ngbDatepicker
-                #fcexpirydate="ngbDatepicker"
-			/>
-			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="fcexpirydate.toggle()" type="button"></button>
-      
-        </div>
+          <app-hb-datepicker [control]="VehicleForm.get('fcexpirydate')" />
+         
                 @if (f['fcexpirydate'].touched && f['fcexpirydate'].hasError('required')) {
                     <div class="text-danger">FC Expiry is required</div>
                 } @else if(f['fcexpirydate'].hasError('minlength')) {
@@ -200,18 +179,8 @@
 
                             <div class="col-md-2 me-1">
                                 <label for="startdate" class="form-label">Start Date</label>
-                                <div class="input-group">
-                                    <input
-                                        class="form-control"
-                                        placeholder="yyyy-mm-dd"
-                                        name="startDate"
-                                        formControlName="startDate"
-                                        ngbDatepicker
-                                        #startDate="ngbDatepicker"
-                                    />
-                                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="startDate.toggle()" type="button"></button>
-                                </div>
-                               
+                                <app-hb-datepicker [control]="document.get('startDate')" />
+                              
                                 @if(document?.get('startDate')?.touched && document?.get('startDate')?.hasError('required')){
                                     <div class="text-danger">Start Date is required</div>
                                 }
@@ -219,17 +188,7 @@
 
                             <div class="col-md-2 me-1">
                                 <label for="enddate" class="form-label">End Date</label>
-                                <div class="input-group">
-                                    <input
-                                        class="form-control"
-                                        placeholder="yyyy-mm-dd"
-                                        name="dp"
-                                        formControlName="endDate"
-                                        ngbDatepicker
-                                        #endDate="ngbDatepicker"
-                                    />
-                                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="endDate.toggle()" type="button"></button>
-                                </div>
+                                <app-hb-datepicker [control]="document.get('endDate')" />
                                
                                 @if(document?.get('endDate')?.touched && document?.get('endDate')?.hasError('required')){
                                     <div class="text-danger">End Date is required</div>
@@ -243,8 +202,9 @@
                        
 
                             <div class="col-md-2">
+                          
                                 @if(document?.get('imagesrc')?.value){
-                                    <img class="rounded m-2" [src]="document?.get('imagesrc')?.value" alt="Preview" width="70" height="70"/>
+                                    <img class="rounded m-2" [src]="document?.get('preview')?.value" alt="Preview" width="70" height="70"/>
                                 }
                                 
                             </div>

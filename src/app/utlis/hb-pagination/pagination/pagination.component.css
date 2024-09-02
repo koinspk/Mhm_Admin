@@ -23,3 +23,34 @@ th {
   transform: scale(1); /* Ensure it returns to original scale */
   transition: background-color 0.8s ease;
 }
+
+.table-wrapper {
+  margin: 5px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensures that the corners are rounded and content does not spill out */
+  border: 1px solid green; /* Border for the wrapper */
+  border-bottom: 2px solid green; 
+}
+
+.styled-table{
+  width: 100%;
+  border-collapse: collapse; 
+
+}
+
+th {
+  background-color: green;
+  color: white;
+} 
+
+.styled-table tbody tr {
+  border-bottom: rgb(6, 146, 6); /* Add border to the last row of the tbody */
+}
+
+.styled-table tbody tr:last-child {
+  border-bottom: white; /* Add border to the last row of the tbody */
+}
+
+.hb-image{
+  border-radius: 5px;
+}

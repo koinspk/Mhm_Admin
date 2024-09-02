@@ -24,9 +24,7 @@ export class PageningComponent {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
-  // get pages(): number[] {
-  //   return Array(this.totalPages).fill(0).map((x, i) => i + 1);
-  // }
+
 
   get pages(): number[] {
     const pages: number[] = [];
@@ -52,7 +50,7 @@ export class PageningComponent {
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
-    console.log(pages)
+   
     return pages;
   }
 
