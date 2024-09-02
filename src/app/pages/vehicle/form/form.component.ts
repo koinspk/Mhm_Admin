@@ -58,22 +58,27 @@ minDate!: NgbDate;
       engineNo : [''],
       fcexpirydate : [''],
       insuranceexpirydate : [''],
-      documents : this.fb.array([])
+      documents : this.fb.array([this.fnDocuments()])
     });
 
     this.generateYears();
  
     /**
+     * 
      * Check page is EDIT and Patch data
+     * 
      * **/
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
-       
         this.getVehicleRecoedById()
       }
     });
-   
+      /**
+       * 
+     * Check page is EDIT and Patch data
+     * 
+     * **/
   }
 
 
