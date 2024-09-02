@@ -58,7 +58,7 @@ minDate!: NgbDate;
       engineNo : [''],
       fcexpirydate : [''],
       insuranceexpirydate : [''],
-      documents : this.fb.array([])
+      documents : this.fb.array([this.fnDocuments()])
     });
 
     this.generateYears();
@@ -79,25 +79,32 @@ minDate!: NgbDate;
 
   getVehicleRecoedById(){
    
-    this.httpService.getData(`vehicle/${this.id}`).subscribe((res:any)=>{
-      delete res._id;
-      delete res.images;
-      delete res.documents;
-      delete res.isDeleted;
-      delete res.createdAt;
-      delete res.updatedAt;
-      delete res.__v;
-      res['documents'] = [];
-      console.log(res)
-      this.VehicleForm.setValue(res);
-      
-    },error=>{
-      console.log(error)
-    })
+          this.httpService.getData(`vehicle/${this.id}`).subscribe((res:any)=>{
+            delete res._id;
+            delete res.images;
+            // delete res.documents;
+            delete res.isDeleted;
+            delete res.createdAt;
+            delete res.updatedAt;
+            delete res.__v;
+          // res['documents'] = [];
+
+            let length = res['documents']?.length;
+            for (let index = 1; index < length; index++) {
+              (this.VehicleForm.get('documents') as FormArray).push(this.fnDocuments())
+            }
+          
+              this.VehicleForm.setValue(res);
+            
+          },error=>{
+            console.log(error)
+          })
+   
   }
 
   fnDocuments(){
     return this.fb.group({
+      _id : [''],
       type : ['',Validators.required],
       imagesrc: [''],
       preview: [''],
