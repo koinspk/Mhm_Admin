@@ -1,0 +1,122 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center text-success font-weight-bold heading">
+    Vehicle Details
+  </h2>
+
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-success d-flex align-items-center">
+              <i class="bi bi-gear-fill me-2"></i>
+              Vehicle Information
+            </h5>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Plate No:</strong> {{ record?.plateno }}
+              </li>
+              <li class="list-group-item">
+                <strong>Make:</strong> {{ record?.make }}
+              </li>
+              <li class="list-group-item">
+                <strong>Model:</strong> {{ record?.model }}
+              </li>
+              <li class="list-group-item">
+                <strong>Year:</strong> {{ record?.year }}
+              </li>
+              <li class="list-group-item">
+                <strong>Fuel Type:</strong> {{ record?.fueltype }}
+              </li>
+              <li class="list-group-item">
+                <strong>Color:</strong> {{ record?.color }}
+              </li>
+              <li class="list-group-item">
+                <strong>Chassis No:</strong> {{ record?.chassisNo }}
+              </li>
+              <li class="list-group-item">
+                <strong>Engine No:</strong> {{ record?.engineNo }}
+              </li>
+              <li class="list-group-item">
+                <strong>FC Expiry Date:</strong>
+                {{ record?.fcexpirydate | date : "dd-MM-yyyy" }}
+              </li>
+              <li class="list-group-item">
+                <strong>Insurance Expiry Date:</strong>
+                {{ record?.insuranceexpirydate | date : "dd-MM-yyyy" }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-success d-flex align-items-center">
+              <i class="bi bi-gear-fill me-2"></i>
+              Vehicle Image
+            </h5>
+            <div class="row d-flex overflow-auto scroll-img">
+              <div *ngFor="let img of record?.images">
+                <img
+                  [src]="imageurl + img.path"
+                  alt="{{ img.path }}"
+                  class="img-fluid rounded col-7"
+                  style="max-width: 100%; margin-right: 15px"
+                />
+                <img
+                  [src]="imageurl + img.path"
+                  alt="{{ img.path }}"
+                  class="img-fluid rounded col-7"
+                  style="max-width: 100%; margin-right: 15px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12" >
+          <div class="card mt-3 p-3 col-12">
+            <h5 class="card-title text-success d-flex align-items-center">
+              <i class="bi bi-gear-fill me-2"></i>
+              Vehicle Documents
+            </h5>
+            <div
+              class="d-flex overflow-auto"
+              style="white-space: nowrap; padding: 10px 0"
+            >
+              <div
+                *ngFor="let doc of record?.documents"
+                class="card mb-1 doc-img"
+                style="display: inline-block;"
+              >
+                <div class="row no-gutters">
+                  <div class="col-6">
+                    <img
+                      [src]="documenturl + doc.path"
+                      alt="{{ doc.path }}"
+                      class="img-fluid rounded-left"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <div class="card-body doc-card">
+                      <p><strong>Type:</strong> {{ doc.type }}</p>
+                      <p><strong>Start Date:</strong> {{ doc.startDate }}</p>
+                      <p><strong>End Date:</strong> {{ doc.endDate }}</p>
+
+
+                      <!-- Add more content here if needed -->
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

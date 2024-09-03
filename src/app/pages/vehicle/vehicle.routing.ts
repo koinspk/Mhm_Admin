@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { VehicleComponent } from './vehicle.component';
 import { FormComponent } from './form/form.component';
+import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
   { 
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path : "edit/:id",
     component : FormComponent
+  },
+  {
+    path : "view/:id",
+    component : ViewComponent
   }
 ];
 
