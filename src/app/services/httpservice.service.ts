@@ -19,7 +19,7 @@ export class HttpserviceService {
   }
 
   get getPublicUrl(){
-    return this.apiUrl;
+    return this.apiUrl + '/';
   }
 
   // Method to post data to the API

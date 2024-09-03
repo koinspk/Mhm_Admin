@@ -64,31 +64,37 @@ minDate!: NgbDate;
     this.generateYears();
  
     /**
+     * 
      * Check page is EDIT and Patch data
+     * 
      * **/
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
-       
         this.getVehicleRecoedById()
       }
     });
-   
+      /**
+       * 
+     * Check page is EDIT and Patch data
+     * 
+     * **/
   }
 
 
   getVehicleRecoedById(){
    
           this.httpService.getData(`vehicle/${this.id}`).subscribe((res:any)=>{
+            console.log("Response::",res)
             delete res._id;
             delete res.images;
-            // delete res.documents;
+            //delete res.documents;
             delete res.isDeleted;
             delete res.createdAt;
             delete res.updatedAt;
             delete res.__v;
           // res['documents'] = [];
-
+          console.log("Response2::",res.documents)
             let length = res['documents']?.length;
             for (let index = 1; index < length; index++) {
               (this.VehicleForm.get('documents') as FormArray).push(this.fnDocuments())
