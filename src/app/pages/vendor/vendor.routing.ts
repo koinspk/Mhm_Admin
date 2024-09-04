@@ -8,7 +8,11 @@ const routes: Routes = [
     component : VendorComponent
    },
    {
-    path : "form",
+    path : "add",
+    component : FormComponent
+   },
+   {
+    path : "edit/:id",
     component : FormComponent
    }
 ];

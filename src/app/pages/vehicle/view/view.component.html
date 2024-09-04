@@ -95,8 +95,8 @@
                 <div class="row no-gutters">
                   <div class="col-6">
                     <img
-                      [src]="documenturl + doc.path"
-                      alt="{{ doc.path }}"
+                      [src]=" doc.preview"
+                      alt="{{ doc.preview }}"
                       class="img-fluid rounded-left"
                     />
                   </div>
@@ -106,8 +106,6 @@
                       <p><strong>Start Date:</strong> {{ doc.startDate }}</p>
                       <p><strong>End Date:</strong> {{ doc.endDate }}</p>
 
-
-                      <!-- Add more content here if needed -->
                     </div>
                   </div>
                 </div>

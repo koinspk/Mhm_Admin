@@ -1,3 +1,8 @@
-<p>
-  vendor works!
-</p>
+<div class="container">
+  <div class=" text-end">
+      <button class="btn btn-primary"  [routerLink]="['add']">ADD</button>
+  </div>
+
+  <app-pagination [data]="Tabledata"  (onPagination)="onPaginationChange($event)"/>
+
+</div>

@@ -204,12 +204,11 @@
                             <div class="col-md-2">
                           
                                 @if(document?.get('imagesrc')?.value){
-                                    @if( document?.get('_id')?.value ){
-                                        <div><img [src]="http"></div>
-                                    } @else{
+                                    <!-- @if( document?.get('_id')?.value ){
+                                        <div><img src="{{imageUrl}}{{ document?.get('preview')?.value }}" width="70" height="70"></div>
+                                    } @else { -->
                                         <img class="rounded m-2" [src]="document?.get('preview')?.value" alt="Preview" width="70" height="70"/>
-
-                                    }
+                                    <!-- } -->
                                 }
                                 
                             </div>
