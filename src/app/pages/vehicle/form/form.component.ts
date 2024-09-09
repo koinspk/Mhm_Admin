@@ -94,12 +94,17 @@ minDate!: NgbDate;
             delete res.updatedAt;
             delete res.__v;
           // res['documents'] = [];
-          console.log("Response2::",res.documents)
-            let length = res['documents']?.length;
-            for (let index = 1; index < length; index++) {
-              (this.VehicleForm.get('documents') as FormArray).push(this.fnDocuments())
-            }
+          const documentsArray = this.VehicleForm.get('documents') as FormArray;
+          documentsArray.clear();
           
+          // If documents exist, push them into the FormArray
+          if (res.documents && res.documents.length) {
+            res.documents.forEach((doc: any) => {
+              const documentGroup = this.fnDocuments();
+              documentGroup.patchValue(doc); // Set the values for each document
+              documentsArray.push(documentGroup);
+            });
+          }
               this.VehicleForm.setValue(res);
             
           },error=>{
