@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
   
 VehicleForm !: FormGroup;
 multiplefileuploadreference : any;
-
+imageUrl : any;
 years :any = [];
 files: { name: string, url: string, type: string , file : BinaryData}[] = [];
 
@@ -42,7 +42,7 @@ minDate!: NgbDate;
   ){
     const today = new Date();
     this.minDate = new NgbDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
- 
+    this.imageUrl = this.httpService.getPublicUrl;
   }
 
 
@@ -88,24 +88,24 @@ minDate!: NgbDate;
             console.log("Response::",res)
             delete res._id;
             delete res.images;
-            //delete res.documents;
             delete res.isDeleted;
             delete res.createdAt;
             delete res.updatedAt;
             delete res.__v;
-          // res['documents'] = [];
-          const documentsArray = this.VehicleForm.get('documents') as FormArray;
-          documentsArray.clear();
-          
-          // If documents exist, push them into the FormArray
-          if (res.documents && res.documents.length) {
-            res.documents.forEach((doc: any) => {
-              const documentGroup = this.fnDocuments();
-              documentGroup.patchValue(doc); // Set the values for each document
-              documentsArray.push(documentGroup);
-            });
-          }
-              this.VehicleForm.setValue(res);
+
+            let length = res['documents']?.length;
+            for (let index = 1; index < length; index++) {
+              (this.VehicleForm.get('documents') as FormArray).push(this.fnDocuments())
+            }
+        // set image path in documents
+            let sc = JSON.parse(JSON.stringify(res.documents));
+            res.documents = sc?.map((r:any)=>({...r,preview :`${this.imageUrl}${r['imagesrc']}` }))
+        // set image path in documents
+            console.log(res)
+
+            this.VehicleForm.setValue(res);
+
+           
             
           },error=>{
             console.log(error)
@@ -137,25 +137,41 @@ minDate!: NgbDate;
   }
 
   async onSubmit(){
+    this.VehicleForm.value['documents']?.map((r:any)=> (r['imagesrc'] instanceof File) ? delete r['preview'] : r  );
+    this.VehicleForm.value['files'] = this.files?.map((res:any)=>res.file); 
+
+    let record = this.httpService.convertToFormData(this.VehicleForm.value);
 
     
-    this.multiplefileuploadreference = JSON.parse(JSON.stringify(this.VehicleForm.get('documents')?.value));;
+
+    if(this.id){
+ 
+      try {
+        this.httpService.updateData('vehicle' , this.id,record).subscribe(res=>{
+          console.log(res)
+        },err=>{
+          console.log(err)
+        })
+      
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+
+        try {
+        this.httpService.postData('vehicle',record).subscribe(res=>{
+          console.log(res)
+        },err=>{
+          console.log(err)
+        })
+      
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
     
-    try {
-        this.VehicleForm.value['documents']?.map((r:any)=> delete r['preview'] );
-        this.VehicleForm.value['files'] = this.files?.map((res:any)=>res.file); 
-
-        let record = this.httpService.convertToFormData(this.VehicleForm.value);
-
-      this.httpService.postData('vehicle',record).subscribe(res=>{
-        console.log(res)
-      },err=>{
-        console.log(err)
-      })
-     
-    } catch (error) {
-      console.log(error);
-     }
+    
 
 
 

@@ -36,9 +36,10 @@ export class ViewComponent implements OnInit {
     if (this.id) {
       this.httpService.getData(`vehicle/${this.id}`).pipe(
         tap(res => {
-          console.log('Response:', res); // Log the response here
-          this.record = res; // Assign the response to the record property
-        }), // Assign the response to the record property
+          let sc = JSON.parse(JSON.stringify(res.documents));
+            res.documents = sc?.map((r:any)=>({...r,preview :`${this.imageurl}${r['imagesrc']}` }))
+          this.record = res; 
+        }),
         catchError(error => {
           console.error(error);
           // Handle error appropriately

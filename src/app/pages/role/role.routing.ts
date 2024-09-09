@@ -1,20 +1,20 @@
 import { Routes, RouterModule } from '@angular/router';
-import { VendorComponent } from './vendor.component';
+import { RoleComponent } from './role.component';
 import { FormComponent } from './form/form.component';
 
 const routes: Routes = [
   { 
     path : "",
-    component : VendorComponent
+    component : RoleComponent
    },
-   {
+   { 
     path : "add",
     component : FormComponent
    },
-   {
+   { 
     path : "edit/:id",
     component : FormComponent
-   }
+   },
 ];
 
-export const VendorRoutes = RouterModule.forChild(routes);
+export const RoleRoutes = RouterModule.forChild(routes);

@@ -20,6 +20,11 @@ const routes: Routes = [
       path : "vendor",
       title : 'vendor',
       loadChildren:()=>import("../vendor/vendor.module").then(m=>m.VendorModule)
+    },
+    {
+      path : "role",
+      title : 'Role',
+      loadChildren:()=>import("../role/role.module").then(m=>m.RoleModule)
     }
   ]
    },

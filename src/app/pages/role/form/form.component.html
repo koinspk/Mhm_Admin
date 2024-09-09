@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <h6 class="mb-4">Role Detail Form</h6>
+  <form [formGroup]="RoleForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" formControlName="name" id="name" placeholder="Enter Name">
+        @if (f['name'].touched && f['name'].hasError('required')) {
+              <div class="text-danger">Name is required</div>
+        } @else if(f['name'].hasError('minlength')) {
+          <div class="text-danger">Atleast enter character {{ f['name'].getError('minlength')?.requiredLength }}</div>
+        }
+      </div>
+      <div class="col-md-4">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" formControlName="description" id="description" placeholder="Enter description">
+              @if (f['description'].touched && f['description'].hasError('required')) {
+                  <div class="text-danger">description is required</div>
+          } @else if(f['description'].hasError('minlength')) {
+              <div class="text-danger">Atleast enter character {{ f['description'].getError('minlength')?.requiredLength }}</div>
+          }
+      </div>
+
+   
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="RoleForm.invalid">Submit</button>
+
+  </form>
+  </div>
+       

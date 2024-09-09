@@ -27,9 +27,9 @@ export class HttpserviceService {
     return this.http.post<any>(`${this.apiUrl}/${url}`, data);
   }
 
-  // Method to put data to the API
-  updateData(url:string,id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${url}/${id}`, data);
+  // Method to patch data to the API
+  updateData(url:string,id: string, data: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${url}/${id}`, data);
   }
 
   // Method to delete data from the API

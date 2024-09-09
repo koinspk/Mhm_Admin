@@ -28,7 +28,6 @@ export class HbDatepickerComponent implements OnChanges  {
           let gg = this.formatDateObjectToString(value);
           const date = moment(gg, "DD-MM-YYYY").format('YYYY-MM-DD');
           this.control.setValue(date,{emitEvent : false})
-          console.log(value)
           this.cdr.detectChanges();
       });
 

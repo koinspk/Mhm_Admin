@@ -1,3 +1,144 @@
-<p>
-  form works!
-</p>
+<div class="container mt-5">
+  <h6 class="mb-4">Vendor Detail Form</h6>
+  <form [formGroup]="VendorForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="organization" class="form-label">Organization</label>
+        <input type="text" class="form-control" formControlName="organisation" id="organisation" placeholder="Enter Plate No">
+        @if (f['organisation'].touched && f['organisation'].hasError('required')) {
+              <div class="text-danger">Organization is required</div>
+        } @else if(f['organisation'].hasError('minlength')) {
+          <div class="text-danger">Atleast enter character {{ f['organisation'].getError('minlength')?.requiredLength }}</div>
+        }
+      </div>
+      <div class="col-md-4">
+        <label for="mailid" class="form-label">Mail ID</label>
+        <input type="text" class="form-control" formControlName="mailid" id="mailid" placeholder="Enter mailid">
+              @if (f['mailid'].touched && f['mailid'].hasError('required')) {
+                  <div class="text-danger">mailid is required</div>
+          } @else if(f['mailid'].hasError('minlength')) {
+              <div class="text-danger">Atleast enter character {{ f['mailid'].getError('minlength')?.requiredLength }}</div>
+          }
+      </div>
+
+      <div class="col-md-4">
+          <label for="password" class="form-label">Password</label>
+          <input type="text" class="form-control" formControlName="password" id="password" placeholder="Enter password">
+                  @if (f['password'].touched && f['password'].hasError('required')) {
+                      <div class="text-danger">password is required</div>
+              } @else if(f['password'].hasError('minlength')) {
+                  <div class="text-danger">Atleast enter character {{ f['password'].getError('minlength')?.requiredLength }}</div>
+              }
+      </div>
+    </div>
+
+    <!-- next row -->
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="contactperson" class="form-label">Contact Person</label>
+        <input type="text" class="form-control" formControlName="contactperson" id="contactperson" placeholder="Enter Plate No">
+        @if (f['contactperson'].touched && f['contactperson'].hasError('required')) {
+              <div class="text-danger">Contact Person is required</div>
+        } @else if(f['contactperson'].hasError('minlength')) {
+          <div class="text-danger">Atleast enter character {{ f['contactperson'].getError('minlength')?.requiredLength }}</div>
+        }
+      </div>
+      <div class="col-md-4">
+        <label for="contactno" class="form-label">Contact No</label>
+        <input type="text" class="form-control" formControlName="contactno" id="contactno" placeholder="Enter Contactno">
+              @if (f['contactno'].touched && f['contactno'].hasError('required')) {
+                  <div class="text-danger">contactno is required</div>
+          } @else if(f['contactno'].hasError('minlength')) {
+              <div class="text-danger">Atleast enter character {{ f['contactno'].getError('minlength')?.requiredLength }}</div>
+          }
+      </div>
+
+      <div class="col-md-4">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control" formControlName="address" id="address" placeholder="Enter address">
+                  @if (f['address'].touched && f['address'].hasError('required')) {
+                      <div class="text-danger">Address is required</div>
+              } @else if(f['address'].hasError('minlength')) {
+                  <div class="text-danger">Atleast enter character {{ f['address'].getError('minlength')?.requiredLength }}</div>
+              }
+      </div>
+    </div>
+
+    <!-- next row -->
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" formControlName="country" id="country" placeholder="Enter Plate No">
+        @if (f['country'].touched && f['country'].hasError('required')) {
+              <div class="text-danger">Country is required</div>
+        } @else if(f['country'].hasError('minlength')) {
+          <div class="text-danger">Atleast enter character {{ f['country'].getError('minlength')?.requiredLength }}</div>
+        }
+      </div>
+      <div class="col-md-4">
+        <label for="state" class="form-label">State</label>
+        <input type="text" class="form-control" formControlName="state" id="state" placeholder="Enter state">
+              @if (f['state'].touched && f['state'].hasError('required')) {
+                  <div class="text-danger">state is required</div>
+          } @else if(f['state'].hasError('minlength')) {
+              <div class="text-danger">Atleast enter character {{ f['state'].getError('minlength')?.requiredLength }}</div>
+          }
+      </div>
+
+      <div class="col-md-4">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" formControlName="city" id="city" placeholder="Enter city">
+                  @if (f['city'].touched && f['city'].hasError('required')) {
+                      <div class="text-danger">city is required</div>
+              } @else if(f['city'].hasError('minlength')) {
+                  <div class="text-danger">Atleast enter character {{ f['city'].getError('minlength')?.requiredLength }}</div>
+              }
+      </div>
+    </div>
+
+
+     <!-- next row -->
+
+     <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="gst" class="form-label">GST</label>
+        <input type="text" class="form-control" formControlName="gst" id="gst" placeholder="Enter Plate No">
+        @if (f['gst'].touched && f['gst'].hasError('required')) {
+              <div class="text-danger">gst is required</div>
+        } @else if(f['gst'].hasError('minlength')) {
+          <div class="text-danger">Atleast enter character {{ f['gst'].getError('minlength')?.requiredLength }}</div>
+        }
+      </div>
+      <div class="col-md-4">
+        <label for="pan" class="form-label">Pan</label>
+        <input type="text" class="form-control" formControlName="pan" id="pan" placeholder="Enter pan">
+              @if (f['pan'].touched && f['pan'].hasError('required')) {
+                  <div class="text-danger">pan is required</div>
+          } @else if(f['pan'].hasError('minlength')) {
+              <div class="text-danger">Atleast enter character {{ f['pan'].getError('minlength')?.requiredLength }}</div>
+          }
+      </div>
+
+      <div>
+   
+        <div class="mb-3">
+            <label for="fileInput" class="form-label">Choose File</label>
+            <input class="form-control" (change)="onFilesSelected($event)"  type="file" id="fileInput"  name="files[]" >
+        </div>
+        <div class="position-relative">
+          @if(VendorForm.get('logo')?.value?.preview){
+            <img class="rounded m-2" [src]="VendorForm.get('logo')?.value?.preview" alt="Preview" width="70" height="70"/>
+            <i class="bi-x-circle-fill text-danger position-absolute top-0 start-100"></i>
+          }
+          </div>
+      </div>
+
+   
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="VendorForm.invalid">Submit</button>
+
+  </form>
+  </div>
+      
